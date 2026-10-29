@@ -1,0 +1,41 @@
+name: CrackGateDemo
+options:
+  bundleIdPrefix: com.npwitk
+  deploymentTarget:
+    iOS: "27.1"
+  createIntermediateGroups: true
+packages:
+  CrackGate:
+    path: ..
+targets:
+  CrackGateDemo:
+    type: application
+    platform: iOS
+    sources:
+      - CrackGateDemo
+    dependencies:
+      - package: CrackGate
+    info:
+      path: CrackGateDemo/Info.plist
+      properties:
+        CFBundleDisplayName: CrackGate
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+          - UIInterfaceOrientationPortraitUpsideDown
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+          - UIInterfaceOrientationPortraitUpsideDown
+    settings:
+      base:
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
