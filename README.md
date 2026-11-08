@@ -66,7 +66,7 @@ it also sits on top of your sheets and alerts, because a dead row of pixels does
 ```swift
 .crackGate(
     .stripes,
-    trigger: .innerDisplay,          // default. or .always / .never / .when(flag)
+    trigger: .innerDisplay,          // default. or .fullyUnfolded / .always / .never / .when(flag)
     onset: .after(.seconds(30)),     // or .immediate / .spreading(.seconds(2))
     presentation: .window,           // or .inline if you want it under your sheets
     seed: 7
@@ -74,6 +74,12 @@ it also sits on top of your sheets and alerts, because a dead row of pixels does
 ```
 
 `.always` is for demos, previews and screenshots. `.when(isAprilFirst)` is for cowards.
+
+`.fullyUnfolded` waits until the panel is opened all the way flat, then cracks. fold it a bit and it's gone, open it flat again and it cracks again. pair it with `.spreading` to watch it split from the fold every single time:
+
+```swift
+.crackGate(.stripes, trigger: .fullyUnfolded, onset: .spreading(.seconds(2)))
+```
 
 want the far half of the panel to brown out too, like in the video? that's a thing, and it listens to the hinge:
 

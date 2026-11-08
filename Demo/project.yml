@@ -12,7 +12,11 @@ targets:
     type: application
     platform: iOS
     sources:
-      - CrackGateDemo
+      - path: CrackGateDemo
+        excludes: ["AppIcon.icon"]
+      - path: CrackGateDemo/AppIcon.icon
+        type: file
+        buildPhase: resources
     dependencies:
       - package: CrackGate
     info:

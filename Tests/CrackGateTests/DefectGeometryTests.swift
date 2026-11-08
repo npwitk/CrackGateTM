@@ -206,13 +206,31 @@ struct TriggerTests {
         #expect(!state(.regular, .compact, .fullyOpen))
     }
 
+    @Test("Fully unfolded requires the inner display and a flat hinge")
+    func fullyUnfolded() {
+        func state(_ h: UserInterfaceSizeClass?, _ v: UserInterfaceSizeClass?, _ hinge: HingeStatus?) -> Bool {
+            DuoDisplayState(horizontalSizeClass: h, verticalSizeClass: v, hinge: hinge).isFullyUnfolded
+        }
+        #expect(state(.regular, .regular, .fullyOpen))
+        #expect(!state(.regular, .regular, .partiallyOpen))
+        #expect(!state(.regular, .regular, .closed))
+        #expect(!state(.compact, .regular, .fullyOpen))
+    }
+
     @Test("Trigger resolution")
     func resolve() {
-        #expect(CrackGateTrigger.innerDisplay.resolve(innerDisplayOpen: true))
-        #expect(!CrackGateTrigger.innerDisplay.resolve(innerDisplayOpen: false))
-        #expect(CrackGateTrigger.always.resolve(innerDisplayOpen: false))
-        #expect(!CrackGateTrigger.never.resolve(innerDisplayOpen: true))
-        #expect(CrackGateTrigger.when(true).resolve(innerDisplayOpen: false))
+        let flat = DuoDisplayState(horizontalSizeClass: .regular, verticalSizeClass: .regular, hinge: .fullyOpen)
+        let bent = DuoDisplayState(horizontalSizeClass: .regular, verticalSizeClass: .regular, hinge: .partiallyOpen)
+        let outer = DuoDisplayState(horizontalSizeClass: .compact, verticalSizeClass: .regular, hinge: .closed)
+        #expect(CrackGateTrigger.innerDisplay.resolve(flat))
+        #expect(CrackGateTrigger.innerDisplay.resolve(bent))
+        #expect(!CrackGateTrigger.innerDisplay.resolve(outer))
+        #expect(CrackGateTrigger.fullyUnfolded.resolve(flat))
+        #expect(!CrackGateTrigger.fullyUnfolded.resolve(bent))
+        #expect(!CrackGateTrigger.fullyUnfolded.resolve(outer))
+        #expect(CrackGateTrigger.always.resolve(outer))
+        #expect(!CrackGateTrigger.never.resolve(flat))
+        #expect(CrackGateTrigger.when(true).resolve(outer))
     }
 
     @Test("Random style is stable per seed")

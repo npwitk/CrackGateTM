@@ -3,7 +3,7 @@ import CrackGate
 
 struct ContentView: View {
     @State private var preset: Preset = .stripes
-    @State private var force = true
+    @State private var when: When = .always
     @State private var spreading = false
     @State private var dimPanel = false
     @State private var seed: UInt64 = CrackGate.defaultSeed
@@ -33,6 +33,18 @@ struct ContentView: View {
             case .rainbow: .rainbow
             case .subtle: .subtle
             case .random: .random
+            }
+        }
+    }
+
+    enum When: String, CaseIterable, Identifiable {
+        case always = "Always", innerDisplay = "Inner display", fullyUnfolded = "100% unfolded"
+        var id: String { rawValue }
+        var trigger: CrackGateTrigger {
+            switch self {
+            case .always: .always
+            case .innerDisplay: .innerDisplay
+            case .fullyUnfolded: .fullyUnfolded
             }
         }
     }
@@ -75,7 +87,7 @@ struct ContentView: View {
         }
         .crackGate(
             dimPanel ? preset.style.panelDim(seed: seed) : preset.style,
-            trigger: Self.launchedClean ? .never : (force ? .always : .innerDisplay),
+            trigger: Self.launchedClean ? .never : when.trigger,
             onset: spreading ? .spreading(.seconds(2)) : .immediate,
             seed: seed
         )
@@ -89,7 +101,10 @@ struct ContentView: View {
                 ForEach(Preset.allCases) { Text($0.rawValue).tag($0) }
             }
             .pickerStyle(.segmented)
-            Toggle("Force (any device)", isOn: $force)
+            Picker("Show", selection: $when) {
+                ForEach(When.allCases) { Text($0.rawValue).tag($0) }
+            }
+            .pickerStyle(.segmented)
             Toggle("Spread in over 2 s", isOn: $spreading)
             Toggle("Right panel flickers", isOn: $dimPanel)
             Stepper("Seed \(seed)", value: $seed, in: 0...UInt64(Int32.max), step: 1)

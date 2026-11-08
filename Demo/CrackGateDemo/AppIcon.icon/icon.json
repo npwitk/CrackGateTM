@@ -1,0 +1,38 @@
+{
+  "fill": {
+    "automatic-gradient": "extended-srgb:0.07000,0.08000,0.12000,1.00000"
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "glass": false,
+          "image-name": "rows.png",
+          "name": "stuck-rows"
+        },
+        {
+          "glass": false,
+          "image-name": "crack.png",
+          "name": "crack"
+        },
+        {
+          "glass": true,
+          "image-name": "panel.png",
+          "name": "inner-display"
+        }
+      ],
+      "lighting": "individual",
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0.5
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}

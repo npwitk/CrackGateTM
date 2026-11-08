@@ -32,7 +32,8 @@ extension View {
     ///
     /// - Parameters:
     ///   - style: Which unit you got. `.stripes` is the video everyone shared.
-    ///   - trigger: When it may appear. `.innerDisplay` by default; `.always` for demos.
+    ///   - trigger: When it may appear. `.innerDisplay` by default; `.fullyUnfolded` to crack only
+    ///     when the panel is opened flat; `.always` for demos.
     ///   - onset: Whether it is there immediately, after a delay, or spreads out from the fold.
     ///   - presentation: Own window above everything (default) or an inline overlay.
     ///   - seed: Fixes the exact shape. Same seed, same crack, every launch.
@@ -69,7 +70,7 @@ struct CrackGateModifier: ViewModifier {
             verticalSizeClass: verticalSizeClass,
             hinge: hinge
         )
-        return trigger.resolve(innerDisplayOpen: state.isInnerDisplayOpen)
+        return trigger.resolve(state)
     }
 
     private var isActive: Bool { shouldShow && armed }

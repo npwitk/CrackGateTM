@@ -72,6 +72,11 @@ struct DuoDisplayState: Equatable {
             && verticalSizeClass == .regular
             && (hinge == .fullyOpen || hinge == .partiallyOpen)
     }
+
+    /// The inner display, opened all the way flat.
+    var isFullyUnfolded: Bool {
+        isInnerDisplayOpen && hinge == .fullyOpen
+    }
 }
 
 /// One hinge update: the new status and how far the angle moved since the last one, in radians.
